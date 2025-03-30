@@ -1,7 +1,7 @@
-From 769f1c6c47b9061b39679e4184d932aefe20a5c4 Mon Sep 17 00:00:00 2001
+From fc3259a5480ad7ac681d6f98c96d25b2b8ef3dc2 Mon Sep 17 00:00:00 2001
 From: Mika Laitio <lamikr@gmail.com>
 Date: Fri, 14 Jun 2024 14:32:34 -0400
-Subject: [PATCH 7/8] fedora40 build breaks for uninitialized variables
+Subject: [PATCH 7/9] fedora40 build breaks for uninitialized variables
 
 Signed-off-by: Mika Laitio <lamikr@gmail.com>
 ---
@@ -65,5 +65,5 @@ index 98a65b8eff..19c5b2ab36 100644
    ASSERT_EQ(fast_shape, expected_fast_shape);
    ASSERT_EQ(fast_output_shape, expected_fast_output_shape);
 -- 
-2.41.1
+2.47.2
 

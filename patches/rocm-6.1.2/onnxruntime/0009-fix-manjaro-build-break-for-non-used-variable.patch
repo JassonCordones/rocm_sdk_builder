@@ -1,0 +1,49 @@
+From da0b38569af81bd24c55fdbc61dd51774137cdd3 Mon Sep 17 00:00:00 2001
+From: Mika Laitio <lamikr@gmail.com>
+Date: Sun, 30 Mar 2025 12:32:31 -0700
+Subject: [PATCH 9/9] fix manjaro build break for non-used variable
+
+Signed-off-by: Mika Laitio <lamikr@gmail.com>
+---
+ cmake/CMakeLists.txt          | 5 +++++
+ cmake/onnxruntime_config.h.in | 1 +
+ 2 files changed, 6 insertions(+)
+
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index 0b3cae245d..1c4755c61a 100644
+--- a/cmake/CMakeLists.txt
++++ b/cmake/CMakeLists.txt
+@@ -654,6 +654,7 @@ else()
+   check_cxx_compiler_flag(-Wuseless-cast HAS_USELESS_CAST)
+   check_cxx_compiler_flag(-Wstringop-overflow HAS_STRINGOP_OVERFLOW)
+   check_function_exists(reallocarray HAS_REALLOCARRAY)
++  check_cxx_compiler_flag(-Wno-unused-variable HAS_NO_UNUSED_VARIABLE)
+   if (NOT APPLE AND NOT CMAKE_SYSTEM_NAME STREQUAL "Emscripten" AND onnxruntime_target_platform STREQUAL "aarch64")
+    check_cxx_compiler_flag(-march=armv8.2-a+bf16 HAS_ARM64_BFLOAT16)
+    if(NOT HAS_ARM64_BFLOAT16)
+@@ -672,6 +673,10 @@ else()
+     #we may have extra null pointer checkings in debug build, it's not an issue
+     list(APPEND ORT_WARNING_FLAGS -Wno-nonnull-compare)
+   endif()
++  if (HAS_NO_UNUSED_VARIABLE)
++    #we may have extra null pointer checkings in debug build, it's not an issue
++    list(APPEND ORT_WARNING_FLAGS -Wno-unused-variable)
++  endif()
+ 
+   if (HAS_AMBIGUOUS_REVERSED_OPERATOR)
+     list(APPEND ORT_WARNING_FLAGS -Wno-ambiguous-reversed-operator)
+diff --git a/cmake/onnxruntime_config.h.in b/cmake/onnxruntime_config.h.in
+index e3ea767401..5ac568c950 100644
+--- a/cmake/onnxruntime_config.h.in
++++ b/cmake/onnxruntime_config.h.in
+@@ -21,6 +21,7 @@
+ #cmakedefine HAS_UNUSED_BUT_SET_PARAMETER
+ #cmakedefine HAS_UNUSED_BUT_SET_VARIABLE
+ #cmakedefine HAS_UNUSED_VARIABLE
++#cmakedefine HAS_NO_UNUSED_VARIABLE 
+ #cmakedefine HAS_USELESS_CAST
+ #cmakedefine ORT_BUILD_INFO "@ORT_BUILD_INFO@"
+ #cmakedefine ORT_VERSION "@ORT_VERSION@"
+-- 
+2.47.2
+

@@ -1,7 +1,7 @@
-From ac21548d13aa29221f06932ca30cc5cc7709c982 Mon Sep 17 00:00:00 2001
+From f2cf365c892054241980e18ae5d2857183c5b011 Mon Sep 17 00:00:00 2001
 From: Mika Laitio <lamikr@gmail.com>
 Date: Fri, 24 May 2024 16:47:18 -0700
-Subject: [PATCH 3/8] gradient_builder.cc dangling reference warning fix
+Subject: [PATCH 3/9] gradient_builder.cc dangling reference warning fix
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -31,5 +31,5 @@ index 22dcf4eb92..81c14a2282 100755
        size_t n = static_cast<size_t>(input_shape.dim_size()) - 1;
        bw_perm.resize(n + 1);
 -- 
-2.41.1
+2.47.2
 
